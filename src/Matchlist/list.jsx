@@ -1,32 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+const API_KEY = "2D04652A-1F6D-4D69-BC3E-E7641404E85B";
 
 const MatchListPage = () => {
-  const [Matchlist, setMatchlist] = useState([]);
+  const [matchlist, setMatchlist] = useState([]);
 
   useEffect(() => {
     const getMatchList = async (e) => {
       const { data } = await axios
-        .get(
-          "https://soccer-football-info.p.rapidapi.com/matches/view/basic/",
-          {
-            params: { i: "1", l: "en_US" },
-            headers: {
-              "X-RapidAPI-Key":
-                "554bd53ecdmsh7f80505d4814a44p114b4bjsn09bbcc73d52f",
-              "X-RapidAPI-Host": "soccer-football-info.p.rapidapi.com",
-            },
-          }
-        )
+        .get("https://rest.coinapi.io/v1/trades/latest", {
+          headers: {
+            "X-CoinAPI-Key": API_KEY,
+          },
+        })
         .catch((e) => {
           console.log(e);
         });
-      setMatchlist(data.result);
+      setMatchlist(data);
     };
 
     getMatchList();
-    console.log(Matchlist);
+    console.log(matchlist);
   }, []);
+
+  useEffect(() => {
+    console.log(matchlist);
+  }, [matchlist]);
 
   return <div>경기리스트</div>;
 };
